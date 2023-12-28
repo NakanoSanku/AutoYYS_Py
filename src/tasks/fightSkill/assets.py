@@ -1,4 +1,4 @@
-from pygamescript import *
+from pygamescript import ImageTemplate
 
 from src.config import IMAGES_DIR
 
@@ -9,3 +9,4 @@ FIGHT_SKILL_FIGHT = ImageTemplate(templatePath=IMAGES_DIR + "/fightSkill/FIGHT_S
 FIGHT_SKILL_GO_INTO_BATTLE = ImageTemplate(templatePath=IMAGES_DIR + "/fightSkill/FIGHT_SKILL_GO_INTO_BATTLE.png",
                                            describe="自动上阵按钮",
                                            threshold=0.8)
+MANUAL = ImageTemplate(templatePath=IMAGES_DIR + "/manual2autoFight/MANUAL.png", describe="手动按钮")

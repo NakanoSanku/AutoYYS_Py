@@ -8,3 +8,5 @@ adbutils~=1.2.9
 apscheduler~=3.10.4
 customtkinter~=5.2.1
 pywebio~=1.8.3
+flask~=3.0.0
+requests~=2.31.0

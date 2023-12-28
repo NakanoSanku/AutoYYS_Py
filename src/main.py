@@ -1,60 +1,33 @@
 # encoding:utf-8
-from pygamescript import GameScript, ImageTemplate
-from minidevice import DroidCast, Minitouch
-from adbutils import adb
-from src.config import IMAGES_DIR
-from time import sleep
-from src.tasks.base.ready.task import ready
-from src.tasks.base.settle.task import settleFail, settleWin
-import requests
 import time
-import json
 
-# my_token = ""
+import loguru
+from pygamescript import GameScript
+from minidevice import Minitouch, DroidCast
+from adbutils import adb
+from apscheduler.schedulers.background import BackgroundScheduler
+from src.tasks.explore.task import ExploreTask
+from src.tasks.soloEnchantment.task import SoloEnchantmentTask
+from src.tasks.teamFight.task import TeamFight
+from src.tasks.base.collaboration.task import CollaborationTask
 
+my_token = "41cdfb44e148403ca067fa2b74c01282"
 
-def pushPlus(token, title, content):
-    url = 'http://www.pushplus.plus/send'
-    data = {
-        "token": token,
-        "title": title,
-        "content": content
-    }
-    body = json.dumps(data).encode(encoding='utf-8')
-    headers = {'Content-Type': 'application/json'}
-    requests.post(url, data=body, headers=headers)
-
-
+loguru.logger.disable("minidevice")
 device = adb.device_list()[0].serial
-
 ld = GameScript(device, capMethod=DroidCast, touchMethod=Minitouch)
+task1 = ExploreTask(ld, 10)
+task2 = SoloEnchantmentTask(ld, is_ensure_level=True)
 
-while 1:
-    ready(ld, isExit=False)
-    settleWin(ld)
-    settleFail(ld)
-    if ld.findAndClick(ImageTemplate(IMAGES_DIR + "超鬼王/探索鬼王.png", region=[1000, 500, 1280, 720])):
-        sleep(3)
-        if ld.find(ImageTemplate(IMAGES_DIR + "超鬼王/探索鬼王.png", region=[1000, 500, 1280, 720])):
-            pushPlus(my_token, "没票了", "你妈死了" + str(time.time()))
+task3 = TeamFight(ld, 999, isLeader=True)
+task4 = CollaborationTask(ld, isAccept=True)
+sche = BackgroundScheduler()
+exploreTask = sche.add_job(task3.run, 'interval', seconds=0.5)
+sche.add_job(task4.run, 'interval', seconds=5)
+if __name__ == '__main__':
+    sche.start()
+    while True:
+        time.sleep(1)
+        if task2.done:
+            print('任务完成')
             break
-
-    if ld.find(ImageTemplate(IMAGES_DIR + "超鬼王/集结.png", region=[200, 300, 300, 400])):
-        sleep(2)
-        if ld.find(
-                ImageTemplate(IMAGES_DIR + "超鬼王/易.png", region=[0, 250, 100, 350], threshold=0.8,
-                              level=0)) or ld.find(
-            ImageTemplate(IMAGES_DIR + "超鬼王/中.png", region=[0, 250, 100, 350], threshold=0.8, level=0)) or ld.find(
-            ImageTemplate(IMAGES_DIR + "超鬼王/高.png", region=[0, 250, 100, 350], threshold=0.8, level=0)):
-            ld.findAndClick(ImageTemplate(IMAGES_DIR + "超鬼王/挑战.png", region=[1000, 500, 1280, 720], threshold=0.8))
-            ld.findAndClick(
-                ImageTemplate(IMAGES_DIR + "超鬼王/挑战2.png", region=[1000, 500, 1280, 720], threshold=0.8))
-        else:
-            pushPlus(my_token, "发现高星鬼王", "你妈死了" + str(time.time()))
-            break
-
-    if ld.findAndClick(ImageTemplate(IMAGES_DIR + "超鬼王/关闭.png", region=[800, 100, 1000, 250])):
-        pushPlus(my_token, "脚本该休息了", "zen你妈死了" + str(time.time()))
-        # 休息10分钟继续
-        sleep(600)
-    sleep(1)

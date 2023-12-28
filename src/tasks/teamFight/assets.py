@@ -1,4 +1,4 @@
-from pygamescript import *
+from pygamescript import ImageTemplate, ColorsTemplate
 
 from src.config import IMAGES_DIR
 

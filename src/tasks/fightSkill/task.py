@@ -1,21 +1,27 @@
-from src.tasks.base.manual2autoFight.task import manual2autoFight
 from src.tasks.base.ready.task import ready
-from src.tasks.base.settle.task import *
-from src.tasks.fightSkill.assets import *
+from src.tasks.base.settle.task import SettleTask
+from src.tasks.base.baseTask import BaseTask
+from src.tasks.fightSkill.assets import FIGHT_SKILL_FIGHT, FIGHT_SKILL_GO_INTO_BATTLE, MANUAL
+from pygamescript import GameScript
 
 
-def fightSkill(device: GameScript):
-    while True:
-        device.findAndClick(FIGHT_SKILL_FIGHT)
+class FightSkillTask(BaseTask):
+    def __init__(self, device: GameScript) -> None:
+        self.device = device
+        self.settleWin = SettleTask(device, SettleTask.SETTLE_WIN_TPYE)
+        self.settleFail = SettleTask(device, SettleTask.SETTLE_FAIL_TPYE)
+        self.settleReward = SettleTask(device, SettleTask.SETTLE_REWARD_TPYE)
+
+    def run(self):
         # 准备
-        ready(device)
+        ready(self.device)
+        self.device.findAndClick(FIGHT_SKILL_FIGHT)
         # 上阵
-        device.findAndClick(FIGHT_SKILL_GO_INTO_BATTLE)
-        # 自动战斗
-        manual2autoFight(device)
-        # 结算
-        settleWin(device)
-        settleFail(device)
-        settleReward(device)
-        # 休息
-        time.sleep(0.8)
+        self.device.findAndClick(FIGHT_SKILL_GO_INTO_BATTLE)
+        self.device.findAndClick(MANUAL)
+        self.settleWin.run()
+        self.settleFail.run()
+        self.settleReward.run()
+
+    def __str__(self) -> str:
+        return "FightSkillTask"

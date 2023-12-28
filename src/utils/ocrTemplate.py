@@ -18,6 +18,7 @@ class OcrTemplate(Template):
         self.threshold = threshold  # 初始化阈值属性，threshold为默认值0.8
         self.region = region  # 初始化区域属性，region为传入的列表，默认为None
         self.isGary = isGary  # 初始化是否为Gary属性，isGary默认为False
+        self.__result = None
 
     @synchronized(ocrLock)
     def match(self, image) -> list:
@@ -35,9 +36,9 @@ class OcrTemplate(Template):
             imageData = np.array(encoded_image).tobytes()
         else:
             raise Exception("图片转化失败")
-        result = self.ocr.runBytes(imageData)
-        if result.get('code', 0) == 100:
-            matched_regions = [item for item in result.get('data', []) if
+        self.__result = self.ocr.runBytes(imageData)
+        if self.__result.get('code', 0) == 100:
+            matched_regions = [item for item in self.__result.get('data', []) if
                                item.get('text', '') == self.text and item.get('score', 0) > self.threshold]
             for item in matched_regions:
                 x1, y1, x2, y2 = item['box'][0] + item['box'][2]
@@ -60,3 +61,6 @@ class OcrTemplate(Template):
     def start():
         if OcrTemplate.ocr is None:
             OcrTemplate.ocr = OcrAPI(OCR_PATH)
+
+    def showAllResult(self):
+        return self.__result
