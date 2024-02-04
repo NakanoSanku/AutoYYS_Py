@@ -1,33 +1,50 @@
-# encoding:utf-8
 import time
 
 import loguru
 from pygamescript import GameScript
-from minidevice import Minitouch, DroidCast
+from minidevice import DroidCast, MiniTouch, MiniCap, ADBCap, ADBTouch, MaaTouch
 from adbutils import adb
-from apscheduler.schedulers.background import BackgroundScheduler
-from src.tasks.explore.task import ExploreTask
-from src.tasks.soloEnchantment.task import SoloEnchantmentTask
-from src.tasks.teamFight.task import TeamFight
-from src.tasks.base.collaboration.task import CollaborationTask
 
-my_token = "41cdfb44e148403ca067fa2b74c01282"
+from src.tasks import SixStreet
 
-loguru.logger.disable("minidevice")
-device = adb.device_list()[0].serial
-ld = GameScript(device, capMethod=DroidCast, touchMethod=Minitouch)
-task1 = ExploreTask(ld, 10)
-task2 = SoloEnchantmentTask(ld, is_ensure_level=True)
+# from src.utils.windows import WinCap, WinTouch
 
-task3 = TeamFight(ld, 999, isLeader=True)
-task4 = CollaborationTask(ld, isAccept=True)
-sche = BackgroundScheduler()
-exploreTask = sche.add_job(task3.run, 'interval', seconds=0.5)
-sche.add_job(task4.run, 'interval', seconds=5)
-if __name__ == '__main__':
-    sche.start()
-    while True:
-        time.sleep(1)
-        if task2.done:
-            print('任务完成')
-            break
+CAP_METHODS = {
+    "DroidCast": DroidCast,
+    "Minicap": MiniCap,
+    "ADB": ADBCap,
+    # "Windows": WinCap
+}
+TOUCH_METHODS = {
+    "ADB": ADBTouch,
+    "minitouch": MiniTouch,
+    'MaaTouch': MaaTouch,
+    # "Windows": WinTouch
+}
+
+
+def getDeviceList():
+    return [device.serial for device in adb.device_list()]
+
+
+loguru.logger.level("INFO")
+print("六道测试用例")
+device = None
+deviceList = getDeviceList()
+for i, device in enumerate(deviceList):
+    print("{}-{}".format(i, device))
+deviceId = input("选择连接设备: ")
+print("等待设备连接")
+device = GameScript(serial=deviceList[int(deviceId)], capMethod=DroidCast, touchMethod=MaaTouch)
+print("设备连接完成")
+
+task = SixStreet(device, 99)
+
+while 1:
+    task.run()
+    time.sleep(0.5)
+    print("执行中")
+    if task.done:
+        break
+
+print("任务完成")

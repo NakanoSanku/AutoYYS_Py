@@ -14,3 +14,5 @@ ROOT_DIR = getRootPath()
 ASSETS_DIR = ROOT_DIR + "assets/"
 IMAGES_DIR = ASSETS_DIR + "images/"
 OCR_PATH = ASSETS_DIR + "bin/ocr/RapidOCR-json.exe"
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720

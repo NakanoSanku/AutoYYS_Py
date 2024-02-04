@@ -5,7 +5,7 @@ import subprocess  # 进程，管道
 from psutil import Process as psutilProcess  # 内存监控
 from sys import platform as sysPlatform  # popen静默模式
 from json import loads as jsonLoads, dumps as jsonDumps
-from base64 import b64encode # base64 编码
+from base64 import b64encode  # base64 编码
 
 InitTimeout = 15  # 初始化超时时间，秒
 
@@ -32,7 +32,7 @@ class OcrAPI:
             startupinfo.dwFlags = subprocess.CREATE_NEW_CONSOLE | subprocess.STARTF_USESHOWWINDOW
             startupinfo.wShowWindow = subprocess.SW_HIDE
         self.ret = subprocess.Popen(  # 打开管道
-            exePath+args, cwd=cwd,
+            exePath + args, cwd=cwd,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             startupinfo=startupinfo  # 开启静默模式
@@ -49,6 +49,7 @@ class OcrAPI:
         def checkTimeout():
             self.initErrorMsg = f'OCR init timeout: {InitTimeout}s.\n{exePath}'
             self.ret.kill()  # 关闭子进程
+
         checkTimer = threading.Timer(InitTimeout, checkTimeout)
         checkTimer.start()
 
@@ -70,7 +71,7 @@ class OcrAPI:
         if not self.ret.poll() == None:
             return {'code': 400, 'data': f'子进程已结束。'}
         try:  # 输入地址转为ascii转义的json字符串，规避编码问题
-            writeStr = jsonDumps(writeDict, ensure_ascii=True, indent=None)+"\n"
+            writeStr = jsonDumps(writeDict, ensure_ascii=True, indent=None) + "\n"
         except Exception as e:
             return {'code': 403, 'data': f'输入字典转json失败。字典：{writeDict} || 报错：[{e}]'}
         # 输入路径
@@ -87,7 +88,8 @@ class OcrAPI:
         try:
             return jsonLoads(getStr)
         except Exception as e:
-            return {'code': 402, 'data': f'识别器输出值反序列化JSON失败，疑似传入了不存在或无法识别的图片。异常信息：{e}。原始内容：{getStr}'}
+            return {'code': 402,
+                    'data': f'识别器输出值反序列化JSON失败，疑似传入了不存在或无法识别的图片。异常信息：{e}。原始内容：{getStr}'}
 
     def run(self, imgPath: str):
         """对一张本地图片进行文字识别。\n
@@ -95,21 +97,21 @@ class OcrAPI:
         `return`:  {"code": 识别码, "data": 内容列表或错误信息字符串}\n"""
         writeDict = {"image_path": imgPath}
         return self.runDict(writeDict)
-    
+
     def runBase64(self, imageBase64: str):
         """对一张编码为base64字符串的图片进行文字识别。\n
         `imageBase64`: 图片base64字符串。\n
         `return`:  {"code": 识别码, "data": 内容列表或错误信息字符串}\n"""
         writeDict = {"image_base64": imageBase64}
         return self.runDict(writeDict)
-    
+
     def runBytes(self, imageBytes):
         """对一张图片的字节流信息进行文字识别。\n
         `imageBytes`: 图片字节流。\n
         `return`:  {"code": 识别码, "data": 内容列表或错误信息字符串}\n"""
         imageBase64 = b64encode(imageBytes).decode('utf-8')
         return self.runBase64(imageBase64)
-    
+
     def stop(self):
         self.ret.kill()  # 关闭子进程。误重复调用似乎不会有坏的影响
 
@@ -123,7 +125,7 @@ class OcrAPI:
             index = 1
             for line in res["data"]:
                 print(f"{index}-置信度：{round(line['score'], 2)}，文本：{line['text']}")
-                index+=1
+                index += 1
         elif res["code"] == 100:
             print("图片中未识别出文字。")
         else:
