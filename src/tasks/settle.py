@@ -3,7 +3,7 @@ import time
 
 from pygamescript import Template, GameScript, ImageTemplate
 
-from src.config import IMAGES_DIR
+from ..config import IMAGES_DIR
 
 
 SETTLE_VIEW = ImageTemplate(
@@ -58,8 +58,7 @@ class SettleTask:
 
         Args:
             device (GameScript): GameScript实例化
-            settleType (SETTLE_TYPE_LIST): SETTLE_TYPE_LIST中的元素 通过getSettleTypeList()获取
-            settleResultList (list, optional): 结算点位列表 默认值为DEFAULT_SETTLE_RESULT_LIST 可以是[x_min,y_min,x_max,y_max]的二维列表,也可以是(x,y)的坐标点
+            settleResultList (list, optional): 结算点位列表 默认值为DEFAULT_SETTLE_RESULT_LIST
             isColor (bool, optional): 是否判断结算标志的颜色. Defaults to False.
             colorThreshold (int, optional): 结算标志的颜色的匹配阈值. Defaults to 4.
             fightAgain (bool, optional): 是否点击再次挑战,仅在结算失败时有效. Defaults to False.

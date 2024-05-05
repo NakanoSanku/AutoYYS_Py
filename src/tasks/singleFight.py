@@ -2,32 +2,34 @@
 from pygamescript import GameScript, ImageTemplate
 from loguru import logger
 
-from src.config import IMAGES_DIR
-from src.tasks.ready import ReadyTask
-from src.tasks.settle import SETTLE_FAIL, SETTLE_REWARD, SETTLE_WIN, SettleTask
-
-SINGLE_FIGHT_CONFIG = {
-    "挑战按钮": ImageTemplate(
-        templatePath=IMAGES_DIR + "/单人战斗/挑战.png", describe="通用类型的单人战斗图标"
-    ),
-    "改变预设": False,
-    "预设分组": None,
-    "预设序号": None,
-    "失败后是否再次挑战": False,
-    "胜利结算数组": [[10, 100, 120, 550], [1150, 50, 1280, 720]],
-    "失败结算数组": [[10, 100, 120, 550], [1150, 50, 1280, 720]],
-    "奖励结算数组": [[10, 100, 120, 550], [1150, 50, 1280, 720]],
-}
+from ..config import IMAGES_DIR
+from .ready import ReadyTask
+from .settle import SETTLE_FAIL, SETTLE_REWARD, SETTLE_WIN, SettleTask
 
 
 class SingleFight:
-    def __init__(self, device: GameScript, times: int, config: dict = {}) -> None:
+    defaultConfig = {
+        "挑战按钮": ImageTemplate(
+            templatePath=IMAGES_DIR + "/单人战斗/挑战.png", describe="通用类型的单人战斗图标"
+        ),
+        "改变预设": False,
+        "预设分组": None,
+        "预设序号": None,
+        "失败后是否再次挑战": False,
+        "胜利结算数组": [[10, 100, 120, 550], [1150, 50, 1280, 720]],
+        "失败结算数组": [[10, 100, 120, 550], [1150, 50, 1280, 720]],
+        "奖励结算数组": [[10, 100, 120, 550], [1150, 50, 1280, 720]],
+    }
+
+    def __init__(self, device: GameScript, times: int, updateConfig=None) -> None:
+        if updateConfig is None:
+            updateConfig = {}
         self.device = device
         self.times = times
         self.runTimes = 0
         self.done = False
-        self.config = SINGLE_FIGHT_CONFIG.update(config)#更新配置
-
+        self.config = self.defaultConfig
+        self.config.update(updateConfig)
         # 准备阶段任务初始化
         self.readyTask = ReadyTask(
             self.device,

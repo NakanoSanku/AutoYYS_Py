@@ -1,5 +1,3 @@
-from time import sleep
-
 from pygamescript import GameScript, ImageTemplate, MultiColorsTemplate
 
 from ..config import IMAGES_DIR
@@ -130,7 +128,7 @@ class ReadyTask:
             self.presetIndex = presetIndex
 
     def run(self):
-        result = self.device.find(READY, isColor=True)
+        result = self.device.find(READY)
         if result:
             if self.isExit:
                 self.__exit()
