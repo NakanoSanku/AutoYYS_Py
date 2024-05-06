@@ -2,3 +2,5 @@
 .conda
 __pycache__
 .idea
+.idea/AutoYYS_Py.iml
+.idea/misc.xml

@@ -5,7 +5,7 @@ from adbutils import adb
 from minidevice import DroidCast, MiniTouch, MiniCap, ADBCap, ADBTouch, MaaTouch
 from pygamescript import GameScript
 
-from src.tasks import PersonalBreakthrough
+from src.tasks import SecretStory
 # from src.utils.windows import WinCap, WinTouch
 
 CAP_METHODS = {
@@ -38,7 +38,7 @@ print("等待设备连接")
 device = GameScript(serial=deviceList[int(deviceId)], capMethod=DroidCast, touchMethod=MiniTouch)
 print("设备连接完成")
 
-task = PersonalBreakthrough(device)
+task = SecretStory(device)
 
 while 1:
     task.run()

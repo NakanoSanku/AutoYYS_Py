@@ -1,4 +1,5 @@
 #  秘闻竞速任务实现 TODO: 完成标识待完善
+import loguru
 from pygamescript import GameScript, ImageTemplate
 from loguru import logger
 
@@ -12,6 +13,9 @@ class SecretStory:
         "秘闻挑战按钮": ImageTemplate(
             templatePath=IMAGES_DIR + "/秘闻竞速/挑战.png", describe="秘闻挑战按钮"
         ),
+        "尚未通关": ImageTemplate(
+            templatePath=IMAGES_DIR + "/秘闻竞速/尚未通关.png", describe="尚未通关标识"
+        ),
         "失败后是否再次挑战": False
     }
 
@@ -19,6 +23,7 @@ class SecretStory:
         if updateConfig is None:
             updateConfig = {}
         self.device = device
+        self.done = False
         self.config = self.defaultConfig
         self.config.update(updateConfig)
         # 准备阶段任务初始化
@@ -46,7 +51,13 @@ class SecretStory:
         self.settleTaskReward.run()
 
     def __fight(self):
-        self.device.findAndClick(self.config['秘闻挑战按钮'])
+        result = self.device.find(self.config['秘闻挑战按钮'])
+        if result:
+            if self.device.find(self.config['尚未通关']):
+                self.device.rangeRandomClick(result)
+            else:
+                loguru.logger.info("已通关完成")
+                self.done = True
 
     def __str__(self) -> str:
         return "协作任务"
