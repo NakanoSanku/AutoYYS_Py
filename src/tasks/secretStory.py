@@ -1,4 +1,4 @@
-#  秘闻竞速任务实现 TODO: 完成标识待完善
+#  秘闻竞速任务实现
 import loguru
 from pygamescript import GameScript, ImageTemplate
 from loguru import logger
