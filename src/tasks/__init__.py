@@ -7,3 +7,4 @@ from .secretStory import SecretStory
 from .personalBreakthrough import PersonalBreakthrough
 from .toiletPaper import ToiletPaper
 from .sceneChange import EnterScene
+from .devilTime import DevilTime
