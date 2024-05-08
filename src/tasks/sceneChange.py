@@ -16,6 +16,10 @@ class EnterScene:
                     templatePath=IMAGES_DIR + "/场景切换/回退庭院/确认1.png", describe="确认按钮1",
                     region=[622, 341, 906, 512]
                 ),
+                "确认2": ImageTemplate(
+                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/确认2.png", describe="确认按钮2",
+                    region=[637, 333, 930, 469]
+                ),
                 "关闭1": ImageTemplate(
                     templatePath=IMAGES_DIR + "/场景切换/回退庭院/关闭1.png", describe="关闭1",
                     region=[568, 2, 1279, 465]
@@ -44,10 +48,14 @@ class EnterScene:
                     templatePath=IMAGES_DIR + "/场景切换/回退庭院/返回5.png", describe="返回按钮5",
                     region=[0, 0, 311, 221]
                 ),
+                "退出1":ImageTemplate(
+                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/退出1.png", describe="退出按钮1",
+                    region=[0, 0, 311, 221]
+                ),
                 "庭院": ImageTemplate(
                     templatePath=IMAGES_DIR + "/场景切换/回退庭院/庭院.png", describe="庭院",
                     region=[988, 181, 1146, 389]
-                )
+                ),
             },
             "成功标志": MultiColorsTemplate("#dcb653", [[10, -3, "#e7c971"], [20, 1, "#efcc7a"], [24, 15, "#d09e55"],
                                                         [13, 18, "#c2934b"], [191, 8, "#f95d47"], [186, 20, "#cdb696"],
