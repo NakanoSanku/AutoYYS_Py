@@ -3,7 +3,7 @@ from pygamescript import GameScript, ImageTemplate
 from loguru import logger
 
 from ..config import IMAGES_DIR
-from .settle import SETTLE_VIEW, SettleTask
+from .settle import SETTLE_VIEW, SettleTask,SETTLE_WIN
 
 
 class FightSkill:
@@ -33,6 +33,7 @@ class FightSkill:
         self.config.update(updateConfig)
         # 结算阶段任务初始化
         self.settleTaskView = SettleTask(self.device, SETTLE_VIEW)
+        self.settleTaskWin = SettleTask(self.device, SETTLE_WIN)
 
     def run(self):
         # 判断任务次数是否已经符合条件
@@ -48,6 +49,7 @@ class FightSkill:
         # 结算阶段
         if self.settleTaskView.run():
             self.runTimes += 1
+        self.settleTaskWin.run()
 
     def __fight(self):
         self.device.findAndClick(self.config["挑战按钮"])
