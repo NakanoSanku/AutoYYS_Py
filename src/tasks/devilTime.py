@@ -91,7 +91,7 @@ class DevilTime:
             self.settleTask.run()
 
     def taskTwo(self):
-        if self.taskTwoDone:
+        if self.taskTwoDone or not self.taskOneDone:
             return
         self.readyTask.run()
         if self.settleTaskView.run():
