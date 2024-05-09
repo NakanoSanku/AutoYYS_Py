@@ -20,6 +20,10 @@ class EnterScene:
                     templatePath=IMAGES_DIR + "/场景切换/回退庭院/确认2.png", describe="确认按钮2",
                     region=[637, 333, 930, 469]
                 ),
+                "确认3": ImageTemplate(
+                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/确认3.png", describe="确认按钮3",
+                    region=[643, 341, 971, 509]
+                ),
                 "关闭1": ImageTemplate(
                     templatePath=IMAGES_DIR + "/场景切换/回退庭院/关闭1.png", describe="关闭1",
                     region=[568, 2, 1279, 465]
@@ -48,7 +52,7 @@ class EnterScene:
                     templatePath=IMAGES_DIR + "/场景切换/回退庭院/返回5.png", describe="返回按钮5",
                     region=[0, 0, 311, 221]
                 ),
-                "退出1":ImageTemplate(
+                "退出1": ImageTemplate(
                     templatePath=IMAGES_DIR + "/场景切换/回退庭院/退出1.png", describe="退出按钮1",
                     region=[0, 0, 311, 221]
                 ),
@@ -86,6 +90,16 @@ class EnterScene:
             "成功标志": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入町中/逢魔之时/指南针.png",
                                       region=[2, 609, 105, 719]),
         },
+        "进入地域鬼王": {
+            "动作库": {
+                "地域鬼王": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入地域鬼王/地域鬼王.png",
+                                          region=[582, 599, 791, 719]),
+                "探索": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入地域鬼王/探索.png",
+                                      region=[621, 106, 755, 235]),
+            },
+            "成功标志": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入地域鬼王/今日挑战.png",
+                                      region=[8, 325, 161, 476]),
+        },
         "模板": {
             "动作库": {
 
@@ -97,6 +111,7 @@ class EnterScene:
     def __init__(self, device: GameScript, actionsName: str) -> None:
         self.device = device
         self.done = False
+        self.actionsName = actionsName
         self.action = self.defaultConfig[actionsName]
 
     def run(self):
@@ -110,6 +125,7 @@ class EnterScene:
 
     def __successSign(self, template):
         if self.device.find(template):
+            loguru.logger.info("{}".format(self.actionsName))
             self.done = True
             return
 
