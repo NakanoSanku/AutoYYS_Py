@@ -4,8 +4,8 @@ import loguru
 from pygamescript import GameScript, ImageTemplate
 from .ready import ReadyTask
 from .settle import SettleTask
-from ..config import IMAGES_DIR, SCREEN_HEIGHT
-from ..utils.ocrTemplate import OcrTemplate
+from src.config import IMAGES_DIR, SCREEN_HEIGHT
+from src.utils.ocrTemplate import OcrTemplate
 
 
 class SixStreet:
@@ -153,17 +153,19 @@ class SixStreet:
         "进入岛屿多少次后刷新技能": 10,
         "BUFF选择优先列表": ["柔风抱暖", "万相之赐"],
         "岛屿选择优先列表": ["混沌", "鏖战", "神秘", "星", "宁息"],
+        "次数": 0
     }
 
-    def __init__(self, device: GameScript, times: int, updateConfig=None) -> None:
+    def __init__(self, device: GameScript, updateConfig=None) -> None:
         if updateConfig is None:
             updateConfig = {}
         self.done = False
         self.device = device
-        self.times = times
+
         self.runTimes = 0
         self.config = self.defaultConfig
         self.config.update(updateConfig)
+        self.times = self.config["次数"]
         self.islandsPriorityTemplateList = [
             self.config[islands] for islands in self.config["岛屿选择优先列表"]
         ]
@@ -215,10 +217,10 @@ class SixStreet:
                     self.device.findAndClick(self.config["仿造_确定"])
             # 宁息岛屿 TODO:遇到商店金币不够用，暂时取消掉购买逻辑，直接退出
             if self.device.find(self.config["宁息之屿"]):
-                # if self.device.findAndClick(self.config["通用确定"]):
+                # if self.device.findAndClick(self.Config["通用确定"]):
                 #     return
                 # # 购买BUFF
-                # self.device.find(self.config["通用确定"])
+                # self.device.find(self.Config["通用确定"])
                 # # 如果有柔风就选柔风...等等，没有就选最后一个
                 # for template in self.buffPriorityTemplateList[:-1]:
                 #     rf_region = self.device.find(template)

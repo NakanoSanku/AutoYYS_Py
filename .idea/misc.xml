@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Black">
-    <option name="sdkName" value="d:\UserData\Desktop\AutoYYS_Py\.conda" />
+    <option name="sdkName" value="AutoYYS_Py" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="d:\UserData\Desktop\AutoYYS_Py\.conda" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="androidAutoTest" project-jdk-type="Python SDK" />
 </project>

@@ -2,8 +2,8 @@
 from pygamescript import GameScript, ImageTemplate
 from loguru import logger
 
-from ..config import IMAGES_DIR
-from .settle import SETTLE_VIEW, SettleTask,SETTLE_WIN
+from src.config import IMAGES_DIR
+from .settle import SETTLE_VIEW, SettleTask, SETTLE_WIN
 
 
 class FightSkill:
@@ -19,18 +19,19 @@ class FightSkill:
         "手动": ImageTemplate(
             templatePath=IMAGES_DIR + "/斗技/手动.png", describe="手动按钮",
             region=[0, 600, 100, 700]
-        )
+        ),
+        "次数": 0
     }
 
-    def __init__(self, device: GameScript, times: int, updateConfig=None) -> None:
+    def __init__(self, device: GameScript, updateConfig=None) -> None:
         if updateConfig is None:
             updateConfig = {}
         self.device = device
-        self.times = times
         self.runTimes = 0
         self.done = False
         self.config = self.defaultConfig
         self.config.update(updateConfig)
+        self.times = self.config["次数"]
         # 结算阶段任务初始化
         self.settleTaskView = SettleTask(self.device, SETTLE_VIEW)
         self.settleTaskWin = SettleTask(self.device, SETTLE_WIN)

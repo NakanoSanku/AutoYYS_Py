@@ -3,7 +3,7 @@ import loguru
 from pygamescript import GameScript, ImageTemplate
 from loguru import logger
 
-from ..config import IMAGES_DIR
+from src.config import IMAGES_DIR
 from .ready import ReadyTask
 from .settle import SETTLE_FAIL, SETTLE_REWARD, SETTLE_WIN, SettleTask
 

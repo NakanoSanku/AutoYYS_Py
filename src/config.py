@@ -5,7 +5,6 @@ PROJECT_NAME = "AutoYYS_Py"
 
 def getRootPath():
     curPath = os.path.abspath(os.path.abspath(__file__))
-
     return curPath[:curPath.find(PROJECT_NAME) + len(PROJECT_NAME)] + '/'
 
 

@@ -2,7 +2,7 @@
 from pygamescript import GameScript, ImageTemplate
 from loguru import logger
 
-from ..config import IMAGES_DIR
+from src.config import IMAGES_DIR
 
 
 class HelpTask:

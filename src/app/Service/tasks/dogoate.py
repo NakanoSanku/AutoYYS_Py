@@ -2,7 +2,7 @@
 import loguru
 from pygamescript import GameScript, ImageTemplate, MultiColorsTemplate
 
-from ..config import IMAGES_DIR
+from src.config import IMAGES_DIR
 from .ready import ReadyTask
 from .settle import SETTLE_FAIL, SETTLE_REWARD, SETTLE_WIN, SettleTask
 
@@ -10,7 +10,7 @@ from .settle import SETTLE_FAIL, SETTLE_REWARD, SETTLE_WIN, SettleTask
 class Dogoate:
     defaultConfig = {
         "挑战": ImageTemplate(
-            templatePath=IMAGES_DIR + "/道馆/挑战.png", describe="挑战图标",
+            templatePath=IMAGES_DIR + "/道馆/挑战.jpg", describe="挑战图标",
             region=[944, 385, 1279, 719]
         ),
         "庭院标识": MultiColorsTemplate(firstColor="#d5ad58",

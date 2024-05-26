@@ -3,8 +3,7 @@ import time
 
 from pygamescript import Template, GameScript, ImageTemplate
 
-from ..config import IMAGES_DIR
-
+from src.config import IMAGES_DIR
 
 SETTLE_VIEW = ImageTemplate(
     templatePath=IMAGES_DIR + "/结算/结算视图.png",
@@ -14,27 +13,33 @@ SETTLE_VIEW = ImageTemplate(
 SETTLE_WIN = ImageTemplate(
     templatePath=IMAGES_DIR + "/结算/结算胜利.png",
     describe="结算胜利",
-    threshold=0.8
+    threshold=0.8,
+    region=[349, 74, 642, 321],
 )
 SETTLE_REWARD = ImageTemplate(
     templatePath=IMAGES_DIR + "/结算/结算奖励.png",
     describe="结算奖励",
-    threshold=0.8
+    threshold=0.8,
+    region=[454, 372, 817, 653]
 )
 SETTLE_FAIL = ImageTemplate(
     templatePath=IMAGES_DIR + "/结算/结算失败.png",
-    describe="结算失败"
+    describe="结算失败",
+    region=[349, 74, 642, 321],
 )
 
 FIGHT_AGAIN = ImageTemplate(
     templatePath=IMAGES_DIR + "/结算/再次挑战.png",
     describe="再战",
-    threshold=0.8
+    threshold=0.8,
+    region=[791, 439, 951, 592],
 )
+
 CONFIRM = ImageTemplate(
     templatePath=IMAGES_DIR + "/结算/再次挑战确认.png",
     describe="再战确定",
-    threshold=0.8
+    threshold=0.8,
+    region=[653, 387, 868, 482],
 )
 DEFAULT_SETTLE_RESULT_LIST = [[10, 100, 120, 550], [1150, 50, 1280, 720]]
 
@@ -46,13 +51,13 @@ class SettleTask:
     SETTLE_DISAPPEAR = 0
 
     def __init__(
-        self,
-        device: GameScript,
-        settleTemplate: Template,
-        settleResultList=None,
-        isColor=False,
-        colorThreshold=4,
-        fightAgain=False,
+            self,
+            device: GameScript,
+            settleTemplate: Template,
+            settleResultList=None,
+            isColor=False,
+            colorThreshold=4,
+            fightAgain=False,
     ) -> None:
         """结算任务
 

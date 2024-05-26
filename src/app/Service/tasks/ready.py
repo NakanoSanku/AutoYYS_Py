@@ -1,11 +1,11 @@
 from pygamescript import GameScript, ImageTemplate, MultiColorsTemplate
 
-from ..config import IMAGES_DIR
+from src.config import IMAGES_DIR
 
 READY = ImageTemplate(
     templatePath=IMAGES_DIR + "准备/准备按钮.png",
     describe="准备按钮",
-    region=[1000, 500, 1280, 720],
+    region=[1091, 508, 1279, 719],
 )
 
 EXIT = ImageTemplate(

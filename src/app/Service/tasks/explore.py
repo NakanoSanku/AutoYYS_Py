@@ -5,7 +5,7 @@ import loguru
 from pygamescript import GameScript, ImageTemplate, algo
 
 from .settle import SettleTask, SETTLE_VIEW
-from ..config import IMAGES_DIR
+from src.config import IMAGES_DIR
 
 
 class Explore:
@@ -22,7 +22,7 @@ class Explore:
         "小怪": ImageTemplate(
             templatePath=IMAGES_DIR + "/探索/小怪.png",
             region=[7, 152, 1273, 719],
-            threshold=0.8,
+            threshold=0.75,
         ),
         "BOSS": ImageTemplate(
             templatePath=IMAGES_DIR + "/探索/BOSS.png",
@@ -30,23 +30,23 @@ class Explore:
             threshold=0.8,
         ),
         "关闭探索界面": ImageTemplate(templatePath=IMAGES_DIR + "/探索/粉色叉.png", region=[1000, 100, 1100, 200]),
-        "退出": ImageTemplate(templatePath=IMAGES_DIR + "/探索/退出.png"),
-        "退出_确认": ImageTemplate(templatePath=IMAGES_DIR + "/探索/退出_确认.png"),
+        "退出": ImageTemplate(templatePath=IMAGES_DIR + "/探索/退出.png", region=[13, 25, 110, 117]),
+        "退出_确认": ImageTemplate(templatePath=IMAGES_DIR + "/探索/退出_确认.png", region=[666, 361, 903, 456]),
         "宝箱": ImageTemplate(templatePath=IMAGES_DIR + "/探索/宝箱.png"),
         "章节": ImageTemplate(templatePath=IMAGES_DIR + "/探索/第二十八章.png", region=[1038, 181, 1272, 682]),
         "选择章节后延迟": 1,
-        "点击打怪延迟": 1,
+        "点击打怪延迟": 0.5,
         "滑动起点范围": [1000, 120, 1100, 120],
         "滑动终点范围": [500, 90, 600, 120],
         "滑动持续时间范围": [350, 400],
         "最大滑动次数": 5,
+        "次数": 0
     }
 
-    def __init__(self, device: GameScript, times: int, updateConfig=None):
+    def __init__(self, device: GameScript, updateConfig=None):
         if updateConfig is None:
             updateConfig = {}
         self.device = device
-        self.times = times
         self.runTimes = 0
         self.done = False
         self.settle = SettleTask(device, SETTLE_VIEW)
@@ -54,8 +54,10 @@ class Explore:
         self.config.update(updateConfig)
         self.BOSSMark = False
         self.swipeTimes = 0
+        self.times = self.config["次数"]
 
     def run(self):
+        #
         # 探索界面阶段
         self.__explorePageStage()
         # 选择怪阶段
@@ -71,8 +73,9 @@ class Explore:
         if self.device.find(self.config["探索界面标识"]):
             # 判断任务次数是否已经符合条件
             if self.runTimes >= self.times:
-                self.done = True
-                return
+                if self.device.find(self.config["探索界面标识"]):
+                    self.done = True
+                    return
             self.device.findAndClick(self.config["宝箱"])
             time.sleep(self.config["选择章节后延迟"])
             self.device.findAndClick(self.config["章节"])

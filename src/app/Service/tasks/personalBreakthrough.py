@@ -4,7 +4,7 @@ import time
 from pygamescript import GameScript, ImageTemplate
 from loguru import logger
 
-from ..config import IMAGES_DIR
+from src.config import IMAGES_DIR
 from .ready import ReadyTask
 from .settle import SETTLE_FAIL, SETTLE_REWARD, SETTLE_WIN, SettleTask
 
@@ -68,12 +68,13 @@ class PersonalBreakthrough:
         self.settleTaskFail = SettleTask(self.device, SETTLE_FAIL, isColor=True, fightAgain=True)
 
     def run(self):
+        # 7次找图
         # 探索界面阶段
         self.__explorePageStage()
         # 个人突破界面阶段
         self.__personalBreakthroughPageStage()
         # 准备阶段
-        self.readyTask.isExit = True if self.winTimes == self.config["退出阈值"] and self.failTimes <= self.config[
+        self.readyTask.isExit = True if self.winTimes == self.config["退出阈值"] and self.failTimes < self.config[
             "失败次数阈值"] else False
         self.readyTask.run()
         # 结算阶段

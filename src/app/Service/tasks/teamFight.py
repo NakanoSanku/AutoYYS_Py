@@ -2,7 +2,7 @@
 from pygamescript import GameScript, ImageTemplate, MultiColorsTemplate
 from loguru import logger
 
-from ..config import IMAGES_DIR
+from src.config import IMAGES_DIR
 from .ready import ReadyTask
 from .settle import SETTLE_FAIL, SETTLE_VIEW, SettleTask
 
@@ -32,17 +32,18 @@ class TeamFight:
         "视图结算数组": [[10, 100, 120, 420], [1150, 50, 1280, 720]],
         "是否为队长": False,
         "是否3P": False,
+        "次数":0
     }
 
-    def __init__(self, device: GameScript, times: int, updateConfig=None) -> None:
+    def __init__(self, device: GameScript, updateConfig=None) -> None:
         if updateConfig is None:
             updateConfig = {}
         self.device = device
-        self.times = times
         self.runTimes = 0
         self.done = False
         self.config = self.defaultConfig
         self.config.update(updateConfig)
+        self.times = self.config["次数"]
         # 准备阶段任务初始化
         self.readyTask = ReadyTask(self.device)
         # 结算阶段任务初始化

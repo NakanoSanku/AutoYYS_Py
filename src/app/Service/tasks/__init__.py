@@ -8,3 +8,6 @@ from .personalBreakthrough import PersonalBreakthrough
 from .toiletPaper import ToiletPaper
 from .sceneChange import EnterScene
 from .devilTime import DevilTime
+from .regionalGhostKing import RegionalGhostKing
+from .helpTask import HelpTask
+from .dogoate import Dogoate

@@ -2,10 +2,10 @@
 import time
 
 import loguru
-from pygamescript import GameScript, ImageTemplate, MultiColorsTemplate
+from pygamescript import GameScript, ImageTemplate, MultiColorsTemplate, Template
 from loguru import logger
 
-from ..config import IMAGES_DIR
+from src.config import IMAGES_DIR
 
 
 class EnterScene:
@@ -100,6 +100,14 @@ class EnterScene:
             "成功标志": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入地域鬼王/今日挑战.png",
                                       region=[8, 325, 161, 476]),
         },
+        "进入组队": {
+            "动作库": {
+                "组队": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入组队/组队.png",
+                                      region=[396, 570, 525, 705])
+            },
+            "成功标志": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入组队/组队标识.png",
+                                      region=[11, 6, 417, 175])
+        },
         "模板": {
             "动作库": {
 
@@ -120,6 +128,7 @@ class EnterScene:
 
     def __enterActions(self, actionsTemplate: dict):
         for _, value in actionsTemplate.items():
+
             if self.device.findAndClick(value):
                 return True
 
