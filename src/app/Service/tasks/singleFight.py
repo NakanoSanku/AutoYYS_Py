@@ -1,6 +1,6 @@
 # 通用单人战斗实现
-from pygamescript import GameScript, ImageTemplate
 from loguru import logger
+from pygamescript import GameScript, ImageTemplate
 
 from src.config import IMAGES_DIR
 from .ready import ReadyTask
@@ -10,7 +10,7 @@ from .settle import SETTLE_FAIL, SETTLE_REWARD, SETTLE_WIN, SettleTask
 class SingleFight:
     defaultConfig = {
         "挑战按钮": ImageTemplate(
-            templatePath=IMAGES_DIR + "/单人战斗/挑战.png", describe="通用类型的单人战斗图标"
+            template_path=IMAGES_DIR + "/单人战斗/挑战.png", describe="通用类型的单人战斗图标"
         ),
         "改变预设": False,
         "预设分组": None,
@@ -46,13 +46,11 @@ class SingleFight:
         self.settleTaskWin = SettleTask(
             self.device,
             SETTLE_WIN,
-            isColor=True,
             settleResultList=self.config["胜利结算数组"],
         )
         self.settleTaskFail = SettleTask(
             self.device,
             SETTLE_FAIL,
-            isColor=True,
             fightAgain=self.config["失败后是否再次挑战"],
             settleResultList=self.config["失败结算数组"],
         )  # 失败后自动再次挑战
@@ -74,7 +72,7 @@ class SingleFight:
             logger.info(self)  # 日志输出任务当前状态
 
     def __fight(self):
-        self.device.findAndClick(self.config["挑战按钮"])
+        self.device.find_and_click(self.config["挑战按钮"])
 
     def __str__(self) -> str:
         return "单人挑战任务<{}/{}>".format(self.runTimes, self.times)

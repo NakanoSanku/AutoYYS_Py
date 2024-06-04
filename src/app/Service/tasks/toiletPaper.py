@@ -1,6 +1,6 @@
 # 抽厕纸功能实现
-from pygamescript import GameScript, ImageTemplate
 from loguru import logger
+from pygamescript import GameScript, ImageTemplate
 
 from src.config import IMAGES_DIR
 
@@ -8,7 +8,7 @@ from src.config import IMAGES_DIR
 class ToiletPaper:
     defaultConfig = {
         "再次召唤按钮": ImageTemplate(
-            templatePath=IMAGES_DIR + "/抽厕纸/再次召唤.png", describe="再次召唤按钮"
+            template_path=IMAGES_DIR + "/抽厕纸/再次召唤.png", describe="再次召唤按钮"
         ),
         "次数": 0
     }
@@ -28,7 +28,7 @@ class ToiletPaper:
         if self.runTimes >= self.times:
             self.done = True
             return
-        if self.device.findAndClick(self.config["再次召唤按钮"]):
+        if self.device.find_and_click(self.config["再次召唤按钮"]):
             self.runTimes += 1  # 计次
             logger.info(self)  # 日志输出任务当前状态
 

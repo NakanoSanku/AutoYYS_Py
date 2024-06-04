@@ -18,6 +18,5 @@ class Task:
         return {
             "name": self.name,
             "config": self.config,
-            "status": self.status,
-            "ex": self.ex
+            "status": self.status
         }

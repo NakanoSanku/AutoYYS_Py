@@ -3,8 +3,7 @@ import time
 
 import cv2
 import minicv
-
-from pygamescript import GameScript, Template
+from pygamescript import Template,GameScript
 
 from src.app.Service.tasks import PersonalBreakthrough
 
@@ -25,4 +24,7 @@ def testFind(taskClass, screenshot):
 
 
 if __name__ == '__main__':
-    testFind(taskClass=PersonalBreakthrough, screenshot=cv2.imread("src/1.png"))
+    test = GameScript("127.0.0.1:")
+    # for i in range(100):
+    #     testFind(taskClass=PersonalBreakthrough)
+    #     time.sleep(0.5)

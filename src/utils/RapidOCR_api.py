@@ -1,11 +1,11 @@
-import os
 import atexit  # 退出处理
-import threading
+import os
 import subprocess  # 进程，管道
-from psutil import Process as psutilProcess  # 内存监控
-from sys import platform as sysPlatform  # popen静默模式
-from json import loads as jsonLoads, dumps as jsonDumps
+import threading
 from base64 import b64encode  # base64 编码
+from json import loads as jsonLoads, dumps as jsonDumps
+# from psutil import Process as psutilProcess  # 内存监控
+from sys import platform as sysPlatform  # popen静默模式
 
 InitTimeout = 15  # 初始化超时时间，秒
 
@@ -38,7 +38,7 @@ class OcrAPI:
             startupinfo=startupinfo  # 开启静默模式
         )
         atexit.register(self.stop)  # 注册程序终止时执行强制停止子进程
-        self.psutilProcess = psutilProcess(self.ret.pid)  # 进程监控对象
+        # self.psutilProcess = psutilProcess(self.ret.pid)  # 进程监控对象
 
         self.initErrorMsg = f'OCR init fail.\n引擎路径：{exePath}\n启动参数：{args}'
 

@@ -21,6 +21,12 @@ def success_response(data=None, message="Success"):
     return jsonify(result.to_dict()), 200
 
 
-def error_response(code=400, message="Error", data=None):
-    result = ResponseResult(code=code, message=message, data=data)
-    return jsonify(result.to_dict()), code
+def error_response(message="Error"):
+    response = jsonify({
+        "error": "Bad Request",
+        "message": message
+    })
+    response.status_code = 400
+    return response
+
+

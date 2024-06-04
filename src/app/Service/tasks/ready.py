@@ -3,23 +3,25 @@ from pygamescript import GameScript, ImageTemplate, MultiColorsTemplate
 from src.config import IMAGES_DIR
 
 READY = ImageTemplate(
-    templatePath=IMAGES_DIR + "准备/准备按钮.png",
+    template_path=IMAGES_DIR + "准备/准备按钮.png",
     describe="准备按钮",
     region=[1091, 508, 1279, 719],
 )
 
 EXIT = ImageTemplate(
-    templatePath=IMAGES_DIR + "准备/退出战斗.png", describe="退出战斗", region=[0, 0, 100, 100]
+    template_path=IMAGES_DIR + "准备/退出战斗.png",
+    describe="退出战斗",
+    region=[0, 0, 100, 100],
 )
 
 EXIT_CONFIRM = ImageTemplate(
-    templatePath=IMAGES_DIR + "准备/退出战斗确认.png",
+    template_path=IMAGES_DIR + "准备/退出战斗确认.png",
     describe="退出确认",
     region=[650, 350, 850, 500],
 )
 
 PRESET = MultiColorsTemplate(
-    firstColor="#d97465",
+    first_color="#d97465",
     colors=[
         [-2, 10, "#de816e"],
         [-2, 22, "#e08572"],
@@ -36,7 +38,7 @@ PRESET = MultiColorsTemplate(
 )
 
 PRESET_PAGE = MultiColorsTemplate(
-    firstColor="#dfc9b6",
+    first_color="#dfc9b6",
     colors=[
         [34, 0, "#dfc9b6"],
         [65, 22, "#5f4637"],
@@ -66,16 +68,18 @@ PRESET_REGION = [
     [193, 475, 665, 588],
 ]
 
-PLAYING = ImageTemplate(templatePath=IMAGES_DIR + "准备/出战状态.png", describe="出战状态")
+PLAYING = ImageTemplate(
+    template_path=IMAGES_DIR + "准备/出战状态.png", describe="出战状态"
+)
 
 PLAY_BUTTON = ImageTemplate(
-    templatePath=IMAGES_DIR + "准备/出战按钮.png",
+    template_path=IMAGES_DIR + "准备/出战按钮.png",
     describe="出战按钮",
     region=[331, 623, 545, 714],
 )
 
 PRESET_GROUP_UNSELECTED = MultiColorsTemplate(
-    firstColor="#e2d3c0",
+    first_color="#e2d3c0",
     colors=[
         [43, 5, "#e1d2be"],
         [65, 5, "#e3d3c0"],
@@ -88,7 +92,7 @@ PRESET_GROUP_UNSELECTED = MultiColorsTemplate(
 )
 
 PRESET_SELECTED = MultiColorsTemplate(
-    firstColor="#b77fc9",
+    first_color="#b77fc9",
     colors=[
         [10, 0, "#b77fc9"],
         [-187, -3, "#ced0f7"],
@@ -104,12 +108,12 @@ PRESET_BUTTON_REGION = [45, 653, 79, 708]
 
 class ReadyTask:
     def __init__(
-            self,
-            device: GameScript,
-            isExit=False,
-            isChangePreset=False,
-            presetGroup: int = None,
-            presetIndex: int = None,
+        self,
+        device: GameScript,
+        isExit=False,
+        isChangePreset=False,
+        presetGroup: int = None,
+        presetIndex: int = None,
     ) -> None:
         """准备阶段任务模块
 
@@ -136,33 +140,33 @@ class ReadyTask:
                 self.__changePreset()
                 return True
             else:
-                self.device.rangeRandomClick(result)
+                self.device.range_random_click(result)
 
     def __exit(self):
-        if not self.device.findAndClick(EXIT_CONFIRM):
-            self.device.findAndClick(EXIT)
+        if not self.device.find_and_click(EXIT_CONFIRM):
+            self.device.find_and_click(EXIT)
 
     def __changePreset(self):
         PRESET_GROUP_UNSELECTED.region = PRESET_GROUP_REGION[self.presetGroup]
         PLAYING.region = PRESET_SELECTED.region = PRESET_REGION[self.presetIndex]
 
-        self.device.findAndClick(PRESET, result=PRESET_BUTTON_REGION)
+        self.device.find_and_click(PRESET, result=PRESET_BUTTON_REGION)
         if self.device.find(PRESET_PAGE):
             if self.device.find(PRESET_GROUP_UNSELECTED):
                 """分组未选中"""
-                self.device.rangeRandomClick(PRESET_GROUP_UNSELECTED.region)
+                self.device.range_random_click(PRESET_GROUP_UNSELECTED.region)
             else:
                 """分组已选中"""
                 if not self.device.find(PRESET_SELECTED):
                     """预设未选中"""
-                    self.device.rangeRandomClick(PRESET_SELECTED.region)
+                    self.device.range_random_click(PRESET_SELECTED.region)
                 else:
                     """预设选中"""
                     if self.device.find(PLAYING):
                         """预设已出战"""
                         self.isChangePreset = False
                     else:
-                        self.device.findAndClick(PLAY_BUTTON)
+                        self.device.find_and_click(PLAY_BUTTON)
 
     def __str__(self):
         return "准备任务\n是否退出:{}\n是否换预设:{}\n预设组:{}\n预设:{}".format(

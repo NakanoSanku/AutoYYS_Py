@@ -1,6 +1,6 @@
 # 通用组队战斗实现
-from pygamescript import GameScript, ImageTemplate, MultiColorsTemplate
 from loguru import logger
+from pygamescript import GameScript, MultiColorsTemplate, ImageColorTemplate
 
 from src.config import IMAGES_DIR
 from .ready import ReadyTask
@@ -9,11 +9,12 @@ from .settle import SETTLE_FAIL, SETTLE_VIEW, SettleTask
 
 class TeamFight:
     defaultConfig = {
-        "挑战按钮": ImageTemplate(
-            templatePath=IMAGES_DIR + "/组队战斗/挑战.png", describe="通用类型的组队战斗挑战图标"
+        "挑战按钮": ImageColorTemplate(
+            template_path=IMAGES_DIR + "/组队战斗/挑战.png",
+            describe="通用类型的组队战斗挑战图标",
         ),
         "3P": MultiColorsTemplate(
-            firstColor="#fffffe",
+            first_color="#fffffe",
             colors=[
                 [9, 0, "#fffffe"],
                 [17, -2, "#fffffe"],
@@ -32,7 +33,7 @@ class TeamFight:
         "视图结算数组": [[10, 100, 120, 420], [1150, 50, 1280, 720]],
         "是否为队长": False,
         "是否3P": False,
-        "次数":0
+        "次数": 0,
     }
 
     def __init__(self, device: GameScript, updateConfig=None) -> None:
@@ -49,7 +50,8 @@ class TeamFight:
         # 结算阶段任务初始化
         self.settleTaskView = SettleTask(self.device, SETTLE_VIEW)
         self.settleTaskFail = SettleTask(
-            self.device, SETTLE_FAIL, isColor=True, fightAgain=self.config["失败后是否再次挑战"])  # 失败后自动再次挑战
+            self.device, SETTLE_FAIL, fightAgain=self.config["失败后是否再次挑战"]
+        )  # 失败后自动再次挑战
 
     def run(self):
         # 判断任务次数是否已经符合条件
@@ -69,11 +71,11 @@ class TeamFight:
     def __fight(self):
         if self.config["是否为队长"]:
             # 判断当前是否在组队界面且有队员入队
-            result = self.device.find(template=self.config["挑战按钮"], isColor=True)
+            result = self.device.find(template=self.config["挑战按钮"])
             if result:
                 # 三人组队逻辑
                 if not self.config["是否3P"] or not self.device.find(
-                        template=self.config["3P"]
+                    template=self.config["3P"]
                 ):
                     self.device.rangeRandomClick(result)
 

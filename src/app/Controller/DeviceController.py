@@ -1,8 +1,9 @@
 # 用于控制设备连接类请请求处理
 from flask import Blueprint, request, current_app
+
+from src.app import SCREENSHOT_METHODS, TOUCH_METHODS
 from src.app.Models.ResponseResult import success_response, error_response
 from src.app.Service import DeviceService
-from src.app import SCREENSHOT_METHODS, TOUCH_METHODS
 
 deviceController = Blueprint('deviceController', __name__)
 

@@ -1,9 +1,7 @@
 # 通用场景切换实现
-import time
 
 import loguru
-from pygamescript import GameScript, ImageTemplate, MultiColorsTemplate, Template
-from loguru import logger
+from pygamescript import GameScript, ImageTemplate, MultiColorsTemplate
 
 from src.config import IMAGES_DIR
 
@@ -13,51 +11,51 @@ class EnterScene:
         "回退到庭院": {
             "动作库": {
                 "确认1": ImageTemplate(
-                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/确认1.png", describe="确认按钮1",
+                    template_path=IMAGES_DIR + "/场景切换/回退庭院/确认1.png", describe="确认按钮1",
                     region=[622, 341, 906, 512]
                 ),
                 "确认2": ImageTemplate(
-                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/确认2.png", describe="确认按钮2",
+                    template_path=IMAGES_DIR + "/场景切换/回退庭院/确认2.png", describe="确认按钮2",
                     region=[637, 333, 930, 469]
                 ),
                 "确认3": ImageTemplate(
-                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/确认3.png", describe="确认按钮3",
+                    template_path=IMAGES_DIR + "/场景切换/回退庭院/确认3.png", describe="确认按钮3",
                     region=[643, 341, 971, 509]
                 ),
                 "关闭1": ImageTemplate(
-                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/关闭1.png", describe="关闭1",
+                    template_path=IMAGES_DIR + "/场景切换/回退庭院/关闭1.png", describe="关闭1",
                     region=[568, 2, 1279, 465]
                 ),
                 "关闭2": ImageTemplate(
-                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/关闭2.png", describe="关闭2",
+                    template_path=IMAGES_DIR + "/场景切换/回退庭院/关闭2.png", describe="关闭2",
                     region=[568, 2, 1279, 465]
                 ),
                 "返回1": ImageTemplate(
-                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/返回1.png", describe="返回按钮1",
+                    template_path=IMAGES_DIR + "/场景切换/回退庭院/返回1.png", describe="返回按钮1",
                     region=[0, 0, 311, 221]
                 ),
                 "返回2": ImageTemplate(
-                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/返回2.png", describe="返回按钮2",
+                    template_path=IMAGES_DIR + "/场景切换/回退庭院/返回2.png", describe="返回按钮2",
                     region=[0, 0, 311, 221]
                 ),
                 "返回3": ImageTemplate(
-                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/返回3.png", describe="返回按钮3",
+                    template_path=IMAGES_DIR + "/场景切换/回退庭院/返回3.png", describe="返回按钮3",
                     region=[0, 0, 311, 221]
                 ),
                 "返回4": ImageTemplate(
-                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/返回4.png", describe="返回按钮4",
+                    template_path=IMAGES_DIR + "/场景切换/回退庭院/返回4.png", describe="返回按钮4",
                     region=[0, 0, 311, 221]
                 ),
                 "返回5": ImageTemplate(
-                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/返回5.png", describe="返回按钮5",
+                    template_path=IMAGES_DIR + "/场景切换/回退庭院/返回5.png", describe="返回按钮5",
                     region=[0, 0, 311, 221]
                 ),
                 "退出1": ImageTemplate(
-                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/退出1.png", describe="退出按钮1",
+                    template_path=IMAGES_DIR + "/场景切换/回退庭院/退出1.png", describe="退出按钮1",
                     region=[0, 0, 311, 221]
                 ),
                 "庭院": ImageTemplate(
-                    templatePath=IMAGES_DIR + "/场景切换/回退庭院/庭院.png", describe="庭院",
+                    template_path=IMAGES_DIR + "/场景切换/回退庭院/庭院.png", describe="庭院",
                     region=[988, 181, 1146, 389]
                 ),
             },
@@ -70,9 +68,9 @@ class EnterScene:
         },
         "进入结界": {
             "动作库": {
-                "阴阳寮": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入阴阳寮/阴阳寮.png",
+                "阴阳寮": ImageTemplate(template_path=IMAGES_DIR + "/场景切换/进入阴阳寮/阴阳寮.png",
                                         region=[510, 576, 641, 699]),
-                "结界": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入阴阳寮/进入结界/结界.png",
+                "结界": ImageTemplate(template_path=IMAGES_DIR + "/场景切换/进入阴阳寮/进入结界/结界.png",
                                       region=[1038, 596, 1161, 716])
             },
             "成功标志": MultiColorsTemplate("#362b2d", [[-2, -7, "#292421"], [1, -12, "#332b2b"], [7, -13, "#292421"],
@@ -82,32 +80,33 @@ class EnterScene:
         },
         "进入逢魔之时": {
             "动作库": {
-                "町中": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入町中/町中.png",
+                "町中": ImageTemplate(template_path=IMAGES_DIR + "/场景切换/进入町中/町中.png",
                                       region=[668, 226, 870, 379]),
-                "逢魔之时": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入町中/逢魔之时/逢魔之时.png",
+                "逢魔之时": ImageTemplate(template_path=IMAGES_DIR + "/场景切换/进入町中/逢魔之时/逢魔之时.png",
                                           region=[567, 122, 701, 259]),
             },
-            "成功标志": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入町中/逢魔之时/指南针.png",
+            "成功标志": ImageTemplate(template_path=IMAGES_DIR + "/场景切换/进入町中/逢魔之时/指南针.png",
                                       region=[2, 609, 105, 719]),
         },
         "进入地域鬼王": {
             "动作库": {
-                "地域鬼王": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入地域鬼王/地域鬼王.png",
+                "地域鬼王": ImageTemplate(template_path=IMAGES_DIR + "/场景切换/进入地域鬼王/地域鬼王.png",
                                           region=[582, 599, 791, 719]),
-                "探索": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入地域鬼王/探索.png",
+                "探索": ImageTemplate(template_path=IMAGES_DIR + "/场景切换/进入地域鬼王/探索.png",
                                       region=[621, 106, 755, 235]),
             },
-            "成功标志": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入地域鬼王/今日挑战.png",
+            "成功标志": ImageTemplate(template_path=IMAGES_DIR + "/场景切换/进入地域鬼王/今日挑战.png",
                                       region=[8, 325, 161, 476]),
         },
         "进入组队": {
             "动作库": {
-                "组队": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入组队/组队.png",
+                "组队": ImageTemplate(template_path=IMAGES_DIR + "/场景切换/进入组队/组队.png",
                                       region=[396, 570, 525, 705])
             },
-            "成功标志": ImageTemplate(templatePath=IMAGES_DIR + "/场景切换/进入组队/组队标识.png",
+            "成功标志": ImageTemplate(template_path=IMAGES_DIR + "/场景切换/进入组队/组队标识.png",
                                       region=[11, 6, 417, 175])
         },
+
         "模板": {
             "动作库": {
 
@@ -129,7 +128,7 @@ class EnterScene:
     def __enterActions(self, actionsTemplate: dict):
         for _, value in actionsTemplate.items():
 
-            if self.device.findAndClick(value):
+            if self.device.find_and_click(value):
                 return True
 
     def __successSign(self, template):

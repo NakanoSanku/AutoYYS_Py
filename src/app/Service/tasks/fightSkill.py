@@ -1,6 +1,5 @@
 #  通用单人战斗实现
 from pygamescript import GameScript, ImageTemplate
-from loguru import logger
 
 from src.config import IMAGES_DIR
 from .settle import SETTLE_VIEW, SettleTask, SETTLE_WIN
@@ -9,15 +8,15 @@ from .settle import SETTLE_VIEW, SettleTask, SETTLE_WIN
 class FightSkill:
     defaultConfig = {
         "挑战按钮": ImageTemplate(
-            templatePath=IMAGES_DIR + "/斗技/挑战.png", describe="斗技挑战按钮", threshold=0.8,
+            template_path=IMAGES_DIR + "/斗技/挑战.png", describe="斗技挑战按钮", threshold=0.8,
             region=[1120, 540, 1280, 720]
         ),
         "自动上阵": ImageTemplate(
-            templatePath=IMAGES_DIR + "/斗技/自动上阵.png", describe="自动上阵按钮",
+            template_path=IMAGES_DIR + "/斗技/自动上阵.png", describe="自动上阵按钮",
             region=[0, 100, 100, 200]
         ),
         "手动": ImageTemplate(
-            templatePath=IMAGES_DIR + "/斗技/手动.png", describe="手动按钮",
+            template_path=IMAGES_DIR + "/斗技/手动.png", describe="手动按钮",
             region=[0, 600, 100, 700]
         ),
         "次数": 0
@@ -53,13 +52,13 @@ class FightSkill:
         self.settleTaskWin.run()
 
     def __fight(self):
-        self.device.findAndClick(self.config["挑战按钮"])
+        self.device.find_and_click(self.config["挑战按钮"])
 
     def __autoDeploy(self):
-        self.device.findAndClick(self.config["自动上阵"])
+        self.device.find_and_click(self.config["自动上阵"])
 
     def __hand2auto(self):
-        self.device.findAndClick(self.config["手动"])
+        self.device.find_and_click(self.config["手动"])
 
     def __str__(self) -> str:
         return "单人挑战任务<{}/{}>".format(self.runTimes, self.times)

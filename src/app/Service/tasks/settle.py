@@ -1,42 +1,42 @@
 import random
 import time
 
-from pygamescript import Template, GameScript, ImageTemplate
+from pygamescript import Template, GameScript, ImageTemplate, ImageColorTemplate
 
 from src.config import IMAGES_DIR
 
 SETTLE_VIEW = ImageTemplate(
-    templatePath=IMAGES_DIR + "/结算/结算视图.png",
+    template_path=IMAGES_DIR + "/结算/结算视图.png",
     describe="结算视图",
     region=[0, 0, 150, 720],
 )
-SETTLE_WIN = ImageTemplate(
-    templatePath=IMAGES_DIR + "/结算/结算胜利.png",
+SETTLE_WIN = ImageColorTemplate(
+    template_path=IMAGES_DIR + "/结算/结算胜利.png",
     describe="结算胜利",
     threshold=0.8,
     region=[349, 74, 642, 321],
 )
 SETTLE_REWARD = ImageTemplate(
-    templatePath=IMAGES_DIR + "/结算/结算奖励.png",
+    template_path=IMAGES_DIR + "/结算/结算奖励.png",
     describe="结算奖励",
     threshold=0.8,
     region=[454, 372, 817, 653]
 )
-SETTLE_FAIL = ImageTemplate(
-    templatePath=IMAGES_DIR + "/结算/结算失败.png",
+SETTLE_FAIL = ImageColorTemplate(
+    template_path=IMAGES_DIR + "/结算/结算失败.png",
     describe="结算失败",
     region=[349, 74, 642, 321],
 )
 
 FIGHT_AGAIN = ImageTemplate(
-    templatePath=IMAGES_DIR + "/结算/再次挑战.png",
+    template_path=IMAGES_DIR + "/结算/再次挑战.png",
     describe="再战",
     threshold=0.8,
     region=[791, 439, 951, 592],
 )
 
 CONFIRM = ImageTemplate(
-    templatePath=IMAGES_DIR + "/结算/再次挑战确认.png",
+    template_path=IMAGES_DIR + "/结算/再次挑战确认.png",
     describe="再战确定",
     threshold=0.8,
     region=[653, 387, 868, 482],
@@ -55,8 +55,6 @@ class SettleTask:
             device: GameScript,
             settleTemplate: Template,
             settleResultList=None,
-            isColor=False,
-            colorThreshold=4,
             fightAgain=False,
     ) -> None:
         """结算任务
@@ -76,8 +74,6 @@ class SettleTask:
         self.settleResultList = (
             DEFAULT_SETTLE_RESULT_LIST if not settleResultList else settleResultList
         )
-        self.isColor = isColor
-        self.colorThreshold = colorThreshold
         self.fightAgain = fightAgain if settleTemplate == SETTLE_FAIL else False
         self.settleMark = SettleTask.SETTLE_DISAPPEAR
 
@@ -86,7 +82,7 @@ class SettleTask:
             # 找到结算标志 更新结算标志
             self.settleMark = SettleTask.SETTLE_APPEAR
             if self.fightAgain:
-                self.device.findAndClick(FIGHT_AGAIN)
+                self.device.find_and_click(FIGHT_AGAIN)
         elif self.settleMark == SettleTask.SETTLE_APPEAR:
             # 结算标志消失了，执行其他操作
             return self.__settleOperate()
@@ -94,7 +90,7 @@ class SettleTask:
     def __settleOperate(self):
         if self.fightAgain:
             # 再次挑战逻辑
-            if self.device.findAndClick(CONFIRM):
+            if self.device.find_and_click(CONFIRM):
                 # 点击完确认返回True并更新标志
                 self.settleMark = SettleTask.SETTLE_DISAPPEAR
                 return True
@@ -104,12 +100,10 @@ class SettleTask:
             return True
 
     def __settle(self, template: Template):
-        res = self.device.find(
-            template, isColor=self.isColor, colorThreshold=self.colorThreshold
-        )
+        res = self.device.find(template)
         if res and not self.fightAgain:
             # 找到结算标志并且不再次挑战时执行结算操作
-            self.device.rangeRandomClick(result=random.choice(self.settleResultList))
+            self.device.range_random_click(result=random.choice(self.settleResultList))
             time.sleep(SETTLE_SLEEP_TIME)
         return res
 

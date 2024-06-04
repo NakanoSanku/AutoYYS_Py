@@ -1,12 +1,12 @@
-import cv2
 import threading
 
-import loguru
+import cv2
 import numpy as np
 from pygamescript import Template
+
+from src.config import OCR_PATH
 from src.utils.RapidOCR_api import OcrAPI
 from src.utils.decorators import synchronized
-from src.config import OCR_PATH
 
 
 def showAllResult():
